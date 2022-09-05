@@ -5,6 +5,7 @@ import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
   const toastOptions = {
@@ -75,7 +76,7 @@ export default function Register() {
           <input
             type="text"
             placeholder="Username"
-            name="Username"
+            name="username"
             onChange={(e) => handleChange(e)}
           />
           <input
