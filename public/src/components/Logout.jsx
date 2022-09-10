@@ -10,11 +10,12 @@ export default function Logout() {
     const id = await JSON.parse(
       localStorage.getItem("chat-app-user")
     )._id;
-    const data = await axios.get(`${logoutRoute}/${id}`);
-    if (data.status === 200) {
+    // const data = await axios.get(`${logoutRoute}/${id}`);
+    // console.log(data)
+    // if (data.status === 200) {
       localStorage.clear();
       navigate("/login");
-    }
+    // }
   };
   return (
     <Button onClick={handleClick}>
