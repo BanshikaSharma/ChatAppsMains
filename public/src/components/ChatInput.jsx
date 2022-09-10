@@ -26,7 +26,12 @@ export default function ChatInput() {
         </div>
       </div>
       <form className="input-container">
-        <input type="text" placeholder="Type your message here" />
+        <input
+          type="text"
+          placeholder="Type your message here"
+          value={msg}
+          onChange={(e) => setMsg(e.target.value)}
+        />
         <button className="submit">
           <IoMdSend />
         </button>
