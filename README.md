@@ -44,11 +44,7 @@ This is Chat Application website. Here you can chat with one another in real tim
 <!-- CONTACT -->
 ## Contact
 
-Mohammad Arsalan - [@_Arsalaan_](https://mobile.twitter.com/_arsalaan_)
-
-Email: arsalanmohd237@gmail.com
-
-[LinkedIn](https://www.linkedin.com/in/mohammadarsalan/)
+Mohammad Arsalan - [@_Arsalaan_](https://mobile.twitter.com/_arsalaan_) | arsalanmohd237@gmail.com | [LinkedIn](https://www.linkedin.com/in/mohammadarsalan/)
 
 <!-- Useful Links -->
 ## Useful Links
