@@ -58,9 +58,9 @@ API is deployed here: https://chat-app-api-kxhg.onrender.com
 Complete application is deployed here: https://chat-app-1-to-1.vercel.app/
 
 <!-- Folder Structure -->
-## Folder Structure
+## :file_folder: Folder Structure
 
-`
+```
 |   .gitignore
 |   README.md
 |
@@ -127,4 +127,4 @@ Complete application is deployed here: https://chat-app-1-to-1.vercel.app/
     \---routes
             messagesRoute.js
             userRoutes.js
-`
+```
