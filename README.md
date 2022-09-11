@@ -17,13 +17,13 @@ The application might be slow for some people because free services are used to 
     </li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#usefulLinks">Useful Links</a></li>
+    <li><a href="#folderStructure">Folder Structure</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 This is Chat Application website. Here you can chat with one another in real time. It has cool list of avatars that you can set to your profile and also emojis by which you can chat.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -40,18 +40,91 @@ This is Chat Application website. Here you can chat with one another in real tim
 4. Goto server directory and type `npm install`
 5. In the same directory run `npm start`
 6. Make sure you set environment variables where ever needed.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
 
 Mohammad Arsalan - [@_Arsalaan_](https://mobile.twitter.com/_arsalaan_)
+
 Email: arsalanmohd237@gmail.com
+
 [LinkedIn](https://www.linkedin.com/in/mohammadarsalan/)
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Useful Links -->
 ## Useful Links
 
 API is deployed here: https://chat-app-api-kxhg.onrender.com
+
 Complete application is deployed here: https://chat-app-1-to-1.vercel.app/
+
+<!-- Folder Structure -->
+## Folder Structure
+
+`
+|   .gitignore
+|   README.md
+|
++---public
+|   |   .gitignore
+|   |   package-lock.json
+|   |   package.json
+|   |   README.md
+|   |
+|   +---public
+|   |       favicon.ico
+|   |       index.html
+|   |       logo192.png
+|   |       logo512.png
+|   |       manifest.json
+|   |       robots.txt
+|   |
+|   \---src
+|       |   App.css
+|       |   App.js
+|       |   App.test.js
+|       |   index.css
+|       |   index.js
+|       |   logo.svg
+|       |   reportWebVitals.js
+|       |   setupTests.js
+|       |
+|       +---assets
+|       |       loader.gif
+|       |       logo.svg
+|       |       robot.gif
+|       |
+|       +---components
+|       |       ChatContainer.jsx
+|       |       ChatInput.jsx
+|       |       Contacts.jsx
+|       |       Logout.jsx
+|       |       Messages.jsx
+|       |       Welcome.jsx
+|       |
+|       +---pages
+|       |       Chat.jsx
+|       |       Login.jsx
+|       |       Register.jsx
+|       |       SetAvatar.jsx
+|       |
+|       \---utils
+|               APIRoutes.js
+|
+\---server
+    |   .env
+    |   index.js
+    |   package-lock.json
+    |   package.json
+    |
+    +---controllers
+    |       messagesController.js
+    |       usersController.js
+    |
+    +---model
+    |       messageModel.js
+    |       userModel.js
+    |
+    \---routes
+            messagesRoute.js
+            userRoutes.js
+`
