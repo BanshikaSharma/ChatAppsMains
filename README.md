@@ -7,9 +7,6 @@ The application might be slow for some people because free services are used to 
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -26,13 +23,6 @@ The application might be slow for some people because free services are used to 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 This is Chat Application website. Here you can chat with one another in real time. It has cool list of avatars that you can set to your profile and also emojis by which you can chat.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Built With
-* [![React][React.js]][React-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![Node][nodejs.org]][nodejs-url]
-* [![MongoDB][mongodb.com]][mongodb-url]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
