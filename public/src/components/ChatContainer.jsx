@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import axios from "axios";
 import { recieveMessageRoute } from "../utils/APIRoutes";
-import { sednMessageRoute, sendMessageRoute } from "../utils/APIRoutes";
+import { sendMessageRoute } from "../utils/APIRoutes";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ChatContainer({

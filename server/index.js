@@ -15,7 +15,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoute);
 
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -32,7 +32,8 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: "https://localhost:3000",
+    // origin: "https://chat-app-api-kxhg.onrender.com",
+    origin: process.env.SERVER_URL,
     credentials: true,
   },
 });
@@ -50,5 +51,14 @@ io.on("connection", (socket) => {
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
+  });
+
+  socket.on("join-room", (roomId, userId) => {
+    socket.join(roomId);
+    socket.to(roomId).emit("user-connected", userId);
+
+    socket.on("disconnect", () => {
+      socket.to(roomId).emit("user-disconnected", userId);
+    });
   });
 });
