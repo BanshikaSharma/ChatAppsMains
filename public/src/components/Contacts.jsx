@@ -96,6 +96,7 @@ const Container = styled.div`
       }
     }
     .contact {
+      overflow-wrap: anywhere;
       background-color: #ffffff34;
       min-height: 5rem;
       cursor: pointer;
@@ -122,6 +123,7 @@ const Container = styled.div`
     }
   }
   .current-user {
+    overflow-wrap: anywhere;
     background-color: #0d0d30;
     display: flex;
     justify-content: center;

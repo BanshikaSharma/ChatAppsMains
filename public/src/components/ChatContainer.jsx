@@ -16,33 +16,30 @@ export default function ChatContainer({
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
-  useEffect(() => {
-    if (currentChat) {
-      const fetchData = async () => {
-        const response = await axios.post(recieveMessageRoute, {
-          from: currentUser._id,
-          to: currentChat._id,
-        });
-        setMessages(response.data);
-      };
-      fetchData();
-    }
-  }, [currentChat]);
 
-  const handleSendMsg = async (msg) => {
-    await axios.post(sendMessageRoute, {
-      from: currentUser._id,
-      to: currentChat._id,
-      message: msg,
-    });
-    socket.current.emit("send-msg", {
-      to: currentChat._id,
-      from: currentUser._id,
-      message: msg,
-    });
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
+  const handleSendMsg = async (msg, isFile) => {
+    if(isFile) {
+      await axios.post("http://localhost:5000/upload", {
+        message: msg
+      }, {
+        headers: {
+        "Content-Type": "multipart/form-data"
+      }})
+    } else {
+      await axios.post(sendMessageRoute, {
+        from: currentUser._id,
+        to: currentChat._id,
+        message: msg,
+      });
+      socket.current.emit("send-msg", {
+        to: currentChat._id,
+        from: currentUser._id,
+        message: msg,
+      });
+      const msgs = [...messages];
+      msgs.push({ fromSelf: true, message: msg });
+      setMessages(msgs);
+    }
   };
 
   useEffect(() => {
@@ -60,6 +57,19 @@ export default function ChatContainer({
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (currentChat) {
+      const fetchData = async () => {
+        const response = await axios.post(recieveMessageRoute, {
+          from: currentUser._id,
+          to: currentChat._id,
+        });
+        setMessages(response.data);
+      };
+      fetchData();
+    }
+  }, [currentChat]);
 
   return (
     <>

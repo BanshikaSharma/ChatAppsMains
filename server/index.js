@@ -5,6 +5,8 @@ const userRoutes = require("./routes/userRoutes");
 const messageRoute = require("./routes/messagesRoute");
 const socket = require("socket.io");
 const { DB_URL, PORT, SERVER_URL } = require("./utils/globalEnv");
+const multer = require("multer");
+const upload = multer({ dest: "uploads" });
 
 const app = express();
 
@@ -13,6 +15,9 @@ app.use(express.json());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoute);
+app.use("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file.path)
+})
 
 mongoose
   .connect(DB_URL, {
@@ -50,14 +55,5 @@ io.on("connection", (socket) => {
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
-  });
-
-  socket.on("join-room", (roomId, userId) => {
-    socket.join(roomId);
-    socket.to(roomId).emit("user-connected", userId);
-
-    socket.on("disconnect", () => {
-      socket.to(roomId).emit("user-disconnected", userId);
-    });
   });
 });

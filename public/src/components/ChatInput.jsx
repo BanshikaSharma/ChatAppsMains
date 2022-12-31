@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
-import VideoCallIcon from "@mui/icons-material/VideoCall";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export default function ChatInput({ handleSendMsg }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
+  const [isFile, setIsFile] = useState(false);
+  const [fileState, setFileState] = useState("");
 
   const handleEmojiPickerHideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
@@ -24,15 +24,21 @@ export default function ChatInput({ handleSendMsg }) {
 
   const sendChat = (event) => {
     event.preventDefault();
-    if (msg.length > 0) {
-      handleSendMsg(msg);
+    if (isFile) {
+      handleSendMsg(fileState, true)
+    } else if (msg.length > 0) {
+      handleSendMsg(msg, false);
       setMsg("");
     }
   };
 
-  const videoCallHandler = () => {
-    navigate(uuidv4());
-  };
+  useEffect(() => {
+    if (fileState) {
+      setMsg(fileState.name);
+      setIsFile(true);
+    }
+  }, [fileState]);
+
   return (
     <Container>
       <div className="button-container">
@@ -40,14 +46,35 @@ export default function ChatInput({ handleSendMsg }) {
           <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
-        <VideoCallIcon onClick={videoCallHandler} />
       </div>
+      <label htmlFor="input-file" style={{ color: "white", cursor: "pointer" }}>
+        <AttachFileIcon />
+        <input
+          id="input-file"
+          type="file"
+          hidden
+          accept="*"
+          onChange={(e) => setFileState(e.target.files[0])}
+        />
+      </label>
       <form className="input-container" onSubmit={(e) => sendChat(e)}>
         <input
           type="text"
           placeholder="Type your message here"
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
+          disabled={isFile}
+        />
+        <ClearIcon
+          sx={{
+            display: isFile ? "" : "none",
+            color: "white",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setIsFile(false);
+            setMsg("");
+          }}
         />
         <button className="submit">
           <IoMdSend />
@@ -58,11 +85,12 @@ export default function ChatInput({ handleSendMsg }) {
 }
 
 const Container = styled.div`
-  display: grid;
+  display: flex;
   align-items: center;
   grid-template-columns: 5% 95%;
   background-color: #080420;
   padding: 0 2rem;
+  gap: 2rem;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
     gap: 1rem;
@@ -108,7 +136,6 @@ const Container = styled.div`
     }
   }
   .input-container {
-    margin-left: 17px;
     width: 100%;
     border-radius: 2rem;
     display: flex;
@@ -131,6 +158,7 @@ const Container = styled.div`
       }
     }
     button {
+      cursor: pointer;
       padding: 0.3rem 2rem;
       border-radius: 2rem;
       display: flex;

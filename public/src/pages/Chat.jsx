@@ -15,6 +15,7 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!localStorage.getItem("chat-app-user")) {
