@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const messageRoute = require("./routes/messagesRoute");
 const socket = require("socket.io");
+const { DB_URL, PORT, SERVER_URL } = require("./utils/globalEnv");
 
 const app = express();
-require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +15,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoute);
 
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -26,14 +26,13 @@ mongoose
     console.log(error);
   });
 
-const server = app.listen(process.env.PORT, () => {
-  console.log(`Server Started on ${process.env.PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`Server Started on ${PORT}`);
 });
 
 const io = socket(server, {
   cors: {
-    // origin: "https://chat-app-api-kxhg.onrender.com",
-    origin: process.env.SERVER_URL,
+    origin: SERVER_URL,
     credentials: true,
   },
 });

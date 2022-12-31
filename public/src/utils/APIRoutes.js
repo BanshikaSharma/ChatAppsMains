@@ -1,5 +1,6 @@
-export const host = process.env.REACT_APP_SERVER_URL;
-console.log(host);
+import { SERVER_URL } from "./globalEnv";
+
+export const host = SERVER_URL;
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const logoutRoute = `${host}/api/auth/logout`;
