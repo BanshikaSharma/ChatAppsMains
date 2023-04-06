@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  lastMessage: {
+    type: Date
+  }
 });
 
 module.exports = mongoose.model("Users", userSchema);

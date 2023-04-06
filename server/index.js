@@ -7,6 +7,7 @@ const socket = require("socket.io");
 const { DB_URL, PORT, SERVER_URL } = require("./utils/globalEnv");
 const multer = require("multer");
 const upload = multer({ dest: "uploads" });
+const Users = require("../server/model/userModel");
 
 const app = express();
 
@@ -53,15 +54,22 @@ io.on("connection", (socket) => {
     io.emit("online-users", onlineUserIds);
   });
 
-  socket.on("send-msg", (data) => {
+  socket.on("send-msg", async (data) => {
+    const userData = await Users.findById(data.from);
+    const date = new Date();
+    userData.lastMessage = date;
+    await userData.save();
+    const allUserdata = await Users.find({}).sort({ lastMessage: -1 });
+    console.log(allUserdata)
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.message);
+      socket.to(sendUserSocket).emit("msg-recieve", data.message, allUserdata);
     }
   });
 
   socket.on("logout", (userId) => {
     onlineUserIds[userId]=false;
+
     io.emit("online-users", onlineUserIds);
   })
 });

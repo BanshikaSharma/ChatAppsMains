@@ -67,7 +67,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "username",
       "avatarImage",
       "_id",
-    ]);
+    ]).sort({ lastMessage: -1 });
     return res.json(users);
   } catch (error) {
     next(error);

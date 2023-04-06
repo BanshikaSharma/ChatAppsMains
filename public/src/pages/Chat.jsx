@@ -7,11 +7,13 @@ import { allUsersRoute, host } from "../utils/APIRoutes";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
 import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/actions";
 
 export default function Chat() {
   const socket = useRef();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -44,7 +46,7 @@ export default function Chat() {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
           const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-          setContacts(data.data);
+          dispatch(setUserData(data.data));
         } else {
           navigate("/setAvatar");
         }
@@ -61,7 +63,6 @@ export default function Chat() {
       <Container>
         <div className="container">
           <Contacts
-            contacts={contacts}
             currentUser={currentUser}
             changeChat={handleChatChange}
             onlineUserIds={onlineUserIds}

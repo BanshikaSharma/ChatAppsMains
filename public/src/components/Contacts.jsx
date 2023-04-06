@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import Logout from "./Logout";
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Contacts({ contacts, currentUser, changeChat, onlineUserIds }) {
+export default function Contacts({ currentUser, changeChat, onlineUserIds }) {
+  const { userData } = useSelector(({ MODULES }) => MODULES);
+  console.log(userData)
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -26,7 +29,7 @@ export default function Contacts({ contacts, currentUser, changeChat, onlineUser
             <h3>snappy</h3>
           </div>
           <div className="contacts">
-            {contacts.map((contact, index) => {
+            {userData && userData.map((contact, index) => {
               return (
                 <div
                   key={contact._id}
@@ -34,7 +37,8 @@ export default function Contacts({ contacts, currentUser, changeChat, onlineUser
                     index === currentSelected ? "selected" : ""
                   }`}
                   style={{ borderLeft: `6px solid ${onlineUserIds[contact._id] ? "#00800096" : "#ff00004f" }`, 
-                           borderRight: `6px solid ${onlineUserIds[contact._id] ? "#00800096" : "#ff00004f" }`
+                           borderRight: `6px solid ${onlineUserIds[contact._id] ? "#00800096" : "#ff00004f" }`,
+                           display: currentUser._id===contact._id ? "none" : ""
                         }}
                   onClick={() => changeCurrentChat(index, contact)}
                 >

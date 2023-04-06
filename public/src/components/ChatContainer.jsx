@@ -5,6 +5,8 @@ import axios from "axios";
 import { recieveMessageRoute } from "../utils/APIRoutes";
 import { sendMessageRoute } from "../utils/APIRoutes";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from "../redux/actions";
 
 export default function ChatContainer({
   currentChat,
@@ -12,6 +14,7 @@ export default function ChatContainer({
   currentUser,
   socket,
 }) {
+  const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
@@ -43,7 +46,8 @@ export default function ChatContainer({
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
+      socket.current.on("msg-recieve", (msg, userData) => {
+        dispatch(setUserData(userData));
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
