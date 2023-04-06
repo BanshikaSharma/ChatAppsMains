@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiPowerOff } from "react-icons/bi";
 import styled from "styled-components";
-import axios from "axios";
-import { logoutRoute } from "../utils/APIRoutes";
+import { host } from "../utils/APIRoutes";
+import { io } from "socket.io-client";
 export default function Logout() {
+  const socket = useRef();
   const navigate = useNavigate();
   const handleClick = async () => {
     const id = await JSON.parse(
       localStorage.getItem("chat-app-user")
     )._id;
-    // const data = await axios.get(`${logoutRoute}/${id}`);
-    // console.log(data)
-    // if (data.status === 200) {
-      localStorage.clear();
-      navigate("/login");
-    // }
+
+    socket.current = io(host, { transports : ['websocket'] });
+    socket.current.emit("logout", id);
+    localStorage.clear();
+    navigate("/login");
   };
   return (
     <Button onClick={handleClick}>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import Logout from "./Logout";
 
-export default function Contacts({ contacts, currentUser, changeChat }) {
+export default function Contacts({ contacts, currentUser, changeChat, onlineUserIds }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -33,6 +33,9 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                   className={`contact ${
                     index === currentSelected ? "selected" : ""
                   }`}
+                  style={{ borderLeft: `6px solid ${onlineUserIds[contact._id] ? "#00800096" : "#ff00004f" }`, 
+                           borderRight: `6px solid ${onlineUserIds[contact._id] ? "#00800096" : "#ff00004f" }`
+                        }}
                   onClick={() => changeCurrentChat(index, contact)}
                 >
                   <div className="avatar">

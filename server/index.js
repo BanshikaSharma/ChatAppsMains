@@ -43,11 +43,14 @@ const io = socket(server, {
 });
 
 global.onlineUsers = new Map();
+let onlineUserIds = {};
 
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
     onlineUsers.set(userId, socket.id);
+    onlineUserIds[userId]=true;
+    io.emit("online-users", onlineUserIds);
   });
 
   socket.on("send-msg", (data) => {
@@ -56,4 +59,9 @@ io.on("connection", (socket) => {
       socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
   });
+
+  socket.on("logout", (userId) => {
+    onlineUserIds[userId]=false;
+    io.emit("online-users", onlineUserIds);
+  })
 });

@@ -15,6 +15,7 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [onlineUserIds, setOnlineUserIds] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,9 @@ export default function Chat() {
     if (currentUser) {
       socket.current = io(host, { transports : ['websocket'] });
       socket.current.emit("add-user", currentUser._id);
+      socket.current.on("online-users", (userId) => {
+        setOnlineUserIds(userId);
+      })
     }
   }, [currentUser]);
 
@@ -60,6 +64,7 @@ export default function Chat() {
             contacts={contacts}
             currentUser={currentUser}
             changeChat={handleChatChange}
+            onlineUserIds={onlineUserIds}
           />
           {isLoaded && currentChat === undefined ? (
             <Welcome currentUser={currentUser} />
